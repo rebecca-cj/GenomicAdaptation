@@ -3,8 +3,6 @@
 #   Process Bayenv2 environmental association   #
 #              analysis results                 #
 #                                               #
-#   Rebecca Jordan October 2016                 #
-#                                               #
 #################################################
 
 ##--- LIBRARIES ---##

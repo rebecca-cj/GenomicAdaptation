@@ -3,8 +3,6 @@
 #   Perform correction for multiple testing  #
 #    on Arlequin outlier (FDIST2) results    #
 #                                            #
-#    Rebecca Jordan July 2016                #
-#                                            #
 ##############################################
 
 library(qvalue)

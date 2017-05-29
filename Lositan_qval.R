@@ -5,8 +5,6 @@
 #                 from getPvalues.R                      #
 #   by Lotterhos & Whitlock 2014 (Mol Ecol 23:2178-92)   #
 #                                                        #
-#   R Jordan Sept 2016                                   #
-#                                                        #
 ##########################################################
 
 ##--- LIBRARIES ---##

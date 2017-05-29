@@ -10,8 +10,6 @@
 #    linear slope only to calculate allele        #
 #            frequency change                     #
 #                                                 #
-#   Jan 2017  Rebecca Jordan                      #
-#                                                 #
 ###################################################
 
 # This analysis uses the absolute future climate projections from AWAP data as "Future" climate 
