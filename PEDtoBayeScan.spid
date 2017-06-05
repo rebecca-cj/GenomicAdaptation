@@ -10,7 +10,7 @@ PED_PARSER_INCLUDE_MAP_QUESTION=true
 # Is the Phenotype absent in the input file?
 PED_PARSER_PHENOTYPE_QUESTION=false
 # Open MAP file
-PED_PARSER_MAP_FILE_QUESTION=mcarpa2.2ndfilt.adj.map
+PED_PARSER_MAP_FILE_QUESTION=INPUT.map
 # Is the Individual ID column absent in the input file?
 PED_PARSER_IND_ID_QUESTION=false
 # Are the Paternal ID and the Maternal ID columns absent in the input file?
