@@ -354,45 +354,41 @@ frq.change.MAT.GDFLCM3.2070 <- delta.MAT.increase("bio01","MAT_GDFLCM3_2070", MA
 # using allele frequence change associated with difference between AWAP 'future' and ALA 'current' climate data
 
 mal.adapt.count <- function(dataIN, varX, plotcolours, CCmodel){
-  # dataIN = list created by "delta.MAT.increase" function containing two lists
-  # 1 = "Current" = current allele freq
-  # 2 = "FutureFrqChange" = change in allele freq associated with climate change
-  
   output <- matrix(ncol = 26, nrow = 6)
-  row.names(output) <- c("fixation", "highFrq", "absent","TotalNoLoci", varX, "PlotCol")
+  row.names(output) <- c("change_to_fixation", "highFrq", "currently_fixed","TotalNoLoci", varX, "PlotCol")
   colnames(output) <- colnames(dataIN$Current)
   output["TotalNoLoci",] <- rep(nrow(dataIN$Current),26)
   output[varX,] <- enviro.data[varX,]
   output["PlotCol",] <- plotcolours
   
   for( site in colnames(dataIN$Current)){
-    fix.allele = 0
+    become.fixed.allele = 0
     high.allele = 0
-    absent.allele = 0
+    fixed.allele = 0
     for( locus in row.names(dataIN$Current) ){
-      if( dataIN$Current[locus,site] == 0){
-        absent.allele = absent.allele + 1
+      if( dataIN$Current[locus,site] == 0 || dataIN$Current[locus,site] == 1){
+        fixed.allele = fixed.allele + 1
       }
       loc.increase <- dataIN$Current[locus,site] + dataIN$FutureFrqChange[locus,site]
       if( loc.increase > 1 ){
-        fix.allele = fix.allele + 1
+        become.fixed.allele = become.fixed.allele + 1
       } else {
         if (loc.increase > max(dataIN$Current[locus,])){
           high.allele = high.allele + 1
         }}}
-    output["fixation",site] <- fix.allele
+    output["change_to_fixation",site] <- become.fixed.allele
     output["highFrq",site] <- high.allele
-    output["absent",site] <- absent.allele
+    output["currently_fixed",site] <- fixed.allele
   }
-
+  
   # plot
   maxX = max(as.numeric(output[1:2,]))
   y.limit = ceiling(maxX/5)*5
-  maxB = max(as.numeric(output["absent",]))
+  maxB = max(as.numeric(output["currently_fixed",]))
   
   pdf(paste("MalAdaptCount_",CCmodel,".pdf",sep=""))
   par(mar=c(5,4,1,1),fig=c(0,1,0,0.75))
-  plot(output[varX,], output["fixation",], pch = 3, col = output["PlotCol",], lwd = 1.5,
+  plot(output[varX,], output["change_to_fixation",], pch = 3, col = output["PlotCol",], lwd = 1.5,
        xlab = "Mean Annual Temperature (Bio01)", ylab = "No. of loci (Fixation or High Frequency)", ylim = c(0, y.limit), xlim = c(13,18), axes=F)
   points(output[varX,], output["highFrq",], pch = 16, col = output["PlotCol",])
   axis(1)
@@ -401,13 +397,13 @@ mal.adapt.count <- function(dataIN, varX, plotcolours, CCmodel){
   legend(13, y.limit-3, c("Central NSW","Southern NSW", "Central Vic", "Western Vic"), pch = rep(16,4), col = c("red","goldenrod","green","blue"), cex = 0.7, pt.cex=0.9)
   legend(13, y.limit-10, c("Fixation", "High Frq"), pch = c(3,16), cex = 0.7, pt.cex = 0.9)
   par(mar=c(2,4,1,1), fig=c(0,1,0.7,1), new=T)
-  plot(output[varX,], output["absent",], pch = 17, col = output["PlotCol",], xlab = NA, ylab = "No. of loci (Absent)",
+  plot(output[varX,], output["currently_fixed",], pch = 17, col = output["PlotCol",], xlab = NA, ylab = "No. of loci (Absent)",
        xlim = c(13,18), axes = F)
   axis(1, labels = NA)
   axis(2, las = 2)
   text(13, maxB, labels = "a)", cex = 1.25)
   dev.off()
-
+  
   return( output )
 }
 
